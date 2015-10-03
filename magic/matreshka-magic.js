@@ -1,6 +1,6 @@
 ;(function(__root) {
 /*
-	Matreshka Magic v1.2.0 (2015-09-30), the part of Matreshka project 
+	Matreshka Magic v1.2.0 (2015-10-03), the part of Matreshka project 
 	JavaScript Framework by Andrey Gubanov
 	Released under the MIT license
 	More info: http://matreshka.io/#magic

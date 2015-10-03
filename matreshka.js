@@ -1,11 +1,11 @@
 ;(function(__root) {
 /*
-	Matreshka v1.2.0 (2015-09-30)
+	Matreshka v1.2.0 (2015-10-03)
 	JavaScript Framework by Andrey Gubanov
 	Released under the MIT license
 	More info: http://matreshka.io
 */
-var matreshka_dir_xclass, matreshka_dir_core_var_core, matreshka_dir_core_util_common, matreshka_dir_core_var_sym, matreshka_dir_core_bindings_binders, matreshka_dir_polyfills_addeventlistener, matreshka_dir_core_dom_lib_balalaika, matreshka_dir_polyfills_classlist, matreshka_dir_core_dom_lib_balalaika_extended, matreshka_dir_core_dom_lib_dollar_lib, matreshka_dir_core_dom_lib_used_lib, matreshka_dir_core_var_isxdr, matreshka_dir_core_initmk, matreshka_dir_core_definespecial, matreshka_dir_core_util_define, matreshka_dir_core_util_linkprops, matreshka_dir_core_util_mediate, matreshka_dir_core_get_set_remove, matreshka_dir_core_bindings_bindnode, matreshka_dir_core_bindings_unbindnode, matreshka_dir_core_bindings_parsebindings, matreshka_dir_core_bindings_getnodes, matreshka_dir_core_events_trigger, matreshka_dir_core_events_on, matreshka_dir_core_events_off, matreshka_dir_core_var_specialevtreg, matreshka_dir_core_events_addlistener, matreshka_dir_core_events_removelistener, matreshka_dir_core_events_delegatelistener, matreshka_dir_core_events_undelegatelistener, matreshka_dir_core_events_domevents, matreshka_dir_core_events_adddomlistener, matreshka_dir_core_events_removedomlistener, matreshka_dir_core_events_once, matreshka_dir_core_events_ondebounce, matreshka_dir_matreshka_magic, matreshka_dir_matreshka_dynamic, matreshka_dir_matreshka_static, matreshka_dir_matreshkaclass, matreshka_dir_matreshka_object_dynamic, matreshka_dir_matreshka_object_iterator, matreshka_dir_core_var_sym_iterator, matreshka_dir_matreshka_objectclass, matreshka_dir_matreshka_array_processrendering, matreshka_dir_matreshka_array_triggermodify, matreshka_dir_matreshka_array_indexof, matreshka_dir_matreshka_array_lastindexof, matreshka_dir_matreshka_array_recreate, matreshka_dir_matreshka_array_native_dynamic, matreshka_dir_matreshka_array_native_static, matreshka_dir_matreshka_array_custom_dynamic, matreshka_dir_matreshka_array_iterator, matreshka_dir_matreshka_arrayclass, matreshka, balalaika, xclass, matreshka_magic;
+var matreshka_dir_xclass, matreshka_dir_core_var_core, matreshka_dir_core_util_common, matreshka_dir_core_var_sym, matreshka_dir_core_bindings_binders, matreshka_dir_polyfills_addeventlistener, matreshka_dir_core_dom_lib_balalaika, matreshka_dir_polyfills_classlist, matreshka_dir_core_dom_lib_balalaika_extended, matreshka_dir_core_dom_lib_dollar_lib, matreshka_dir_core_dom_lib_used_lib, matreshka_dir_core_var_isxdr, matreshka_dir_core_initmk, matreshka_dir_core_definespecial, matreshka_dir_core_util_define, matreshka_dir_core_util_linkprops, matreshka_dir_core_util_mediate, matreshka_dir_core_get_set_remove, matreshka_dir_core_bindings_bindnode, matreshka_dir_core_bindings_unbindnode, matreshka_dir_core_bindings_parsebindings, matreshka_dir_core_bindings_getnodes, matreshka_dir_core_events_trigger, matreshka_dir_core_events_on, matreshka_dir_core_events_off, matreshka_dir_core_var_specialevtreg, matreshka_dir_core_events_addlistener, matreshka_dir_core_events_removelistener, matreshka_dir_core_events_delegatelistener, matreshka_dir_core_events_undelegatelistener, matreshka_dir_core_events_domevents, matreshka_dir_core_events_adddomlistener, matreshka_dir_core_events_removedomlistener, matreshka_dir_core_events_once, matreshka_dir_core_events_ondebounce, matreshka_dir_matreshka_magic, matreshka_dir_matreshka_dynamic, matreshka_dir_matreshka_static, matreshka_dir_matreshkaclass, matreshka_dir_matreshka_object_dynamic, matreshka_dir_matreshka_object_iterator, matreshka_dir_core_var_sym_iterator, matreshka_dir_matreshka_array_processrendering, matreshka_dir_matreshka_objectclass, matreshka_dir_matreshka_array_triggermodify, matreshka_dir_matreshka_array_indexof, matreshka_dir_matreshka_array_lastindexof, matreshka_dir_matreshka_array_recreate, matreshka_dir_matreshka_array_native_dynamic, matreshka_dir_matreshka_array_native_static, matreshka_dir_matreshka_array_custom_dynamic, matreshka_dir_matreshka_array_iterator, matreshka_dir_matreshka_arrayclass, matreshka, balalaika, xclass, matreshka_magic;
 matreshka_dir_xclass = function () {
   var isArguments = function (o) {
       return !!o && (o.toString() === '[object Arguments]' || typeof o === 'object' && o !== null && 'length' in o && 'callee' in o);
@@ -2591,51 +2591,6 @@ matreshka_dir_matreshka_object_iterator = function () {
   };
 };
 matreshka_dir_core_var_sym_iterator = typeof Symbol != 'undefined' ? Symbol.iterator : '@@iterator';
-matreshka_dir_matreshka_objectclass = function (MK, dynamic, symIterator, iterator) {
-  if (!MK) {
-    throw new Error('Matreshka is missing');
-  }
-  var sym = MK.sym, i, prototype = {
-      'extends': MK,
-      isMKObject: true,
-      renderer: null,
-      constructor: function MatreshkaObject(object) {
-        return this.jset(object);
-      },
-      _initMK: function () {
-        var _this = this, addedEvents;
-        if (_this[sym])
-          return _this;
-        MK.prototype._initMK.call(_this, arguments);
-        _this[sym].keys = {};
-        MK._fastAddListener(_this, 'addevent:modify', function (evt) {
-          if (!addedEvents) {
-            MK._fastAddListener(_this, 'change', function (evt) {
-              if (evt && evt.key in _this[sym].keys && !evt.silent) {
-                MK._fastTrigger(_this, 'modify', evt);
-              }
-            });
-            MK._fastAddListener(_this, 'delete', function (evt) {
-              if (evt && evt.key in _this[sym].keys) {
-                _this.removeDataKeys(evt.key);
-                if (!evt.silent) {
-                  MK._fastTrigger(_this, 'modify', evt);
-                }
-              }
-            });
-            addedEvents = true;
-          }
-        });
-        return _this;
-      },
-      hasOwnProperty: function (key) {
-        return this._initMK()[sym].keys.hasOwnProperty(key);
-      }
-    };
-  MK.extend(prototype, dynamic);
-  prototype[symIterator] = iterator;
-  return MK.Object = MK.Class(prototype);
-}(matreshka_dir_matreshkaclass, matreshka_dir_matreshka_object_dynamic, matreshka_dir_matreshka_object_iterator, matreshka_dir_core_var_sym_iterator);
 matreshka_dir_matreshka_array_processrendering = function (sym, initMK, MK) {
   var renderOne = function (_this, item, evt) {
     if (!item || typeof item != 'object' || !_this.renderIfPossible || evt.dontRender)
@@ -2747,18 +2702,26 @@ matreshka_dir_matreshka_array_processrendering = function (sym, initMK, MK) {
       }
       break;
     case 'rerender':
-      if (evt.forceRerender) {
-        for (i = 0; i < l; i++) {
-          item = _this[i];
-          node = item && item[sym] && item[sym].arraysNodes && item[sym].arraysNodes[id];
-          if (node) {
-            container.removeChild(node);
+      if (_this instanceof MK.Object) {
+        var index = this.indexOf(obj);
+        var native_obj = obj.toJSON();
+        this.pull(index);
+        this.splice(index, 0, native_obj);
+        console.log(222222222);
+      } else {
+        if (evt.forceRerender) {
+          for (i = 0; i < l; i++) {
+            item = _this[i];
+            node = item && item[sym] && item[sym].arraysNodes && item[sym].arraysNodes[id];
+            if (node) {
+              container.removeChild(node);
+            }
           }
         }
-      }
-      for (i = 0; i < l; i++) {
-        if (node = renderOne(_this, _this[i], evt)) {
-          container.appendChild(node);
+        for (i = 0; i < l; i++) {
+          if (node = renderOne(_this, _this[i], evt)) {
+            container.appendChild(node);
+          }
         }
       }
       break;
@@ -2781,6 +2744,58 @@ matreshka_dir_matreshka_array_processrendering = function (sym, initMK, MK) {
     return _this;
   };
 }(matreshka_dir_core_var_sym, matreshka_dir_core_initmk, matreshka_dir_matreshkaclass);
+matreshka_dir_matreshka_objectclass = function (MK, dynamic, symIterator, iterator, processRendering) {
+  if (!MK) {
+    throw new Error('Matreshka is missing');
+  }
+  var sym = MK.sym, i, prototype = {
+      'extends': MK,
+      isMKObject: true,
+      renderer: null,
+      constructor: function MatreshkaObject(object) {
+        return this.jset(object);
+      },
+      _initMK: function () {
+        var _this = this, addedEvents;
+        if (_this[sym])
+          return _this;
+        MK.prototype._initMK.call(_this, arguments);
+        _this[sym].keys = {};
+        MK._fastAddListener(_this, 'addevent:modify', function (evt) {
+          if (!addedEvents) {
+            MK._fastAddListener(_this, 'change', function (evt) {
+              if (evt && evt.key in _this[sym].keys && !evt.silent) {
+                MK._fastTrigger(_this, 'modify', evt);
+              }
+            });
+            MK._fastAddListener(_this, 'delete', function (evt) {
+              if (evt && evt.key in _this[sym].keys) {
+                _this.removeDataKeys(evt.key);
+                if (!evt.silent) {
+                  MK._fastTrigger(_this, 'modify', evt);
+                }
+              }
+            });
+            addedEvents = true;
+          }
+        });
+        return _this;
+      },
+      hasOwnProperty: function (key) {
+        return this._initMK()[sym].keys.hasOwnProperty(key);
+      },
+      rerender: function (evt) {
+        //var index = this.indexOf(obj);
+        //var native_obj = obj.toJSON();
+        //this.pull(index);
+        //this.splice(index, 0, native_obj);
+        console.log(222, this);
+      }
+    };
+  MK.extend(prototype, dynamic);
+  prototype[symIterator] = iterator;
+  return MK.Object = MK.Class(prototype);
+}(matreshka_dir_matreshkaclass, matreshka_dir_matreshka_object_dynamic, matreshka_dir_matreshka_object_iterator, matreshka_dir_core_var_sym_iterator, matreshka_dir_matreshka_array_processrendering);
 matreshka_dir_matreshka_array_triggermodify = function (MK, sym, processRendering) {
   return function (_this, evt, additional) {
     var added = evt.added, removed = evt.removed, events = _this[sym].events, i;

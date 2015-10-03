@@ -2,8 +2,9 @@ define([
 	'matreshka_dir/matreshka.class',
 	'matreshka_dir/matreshka-object/dynamic',
 	'matreshka_dir/matreshka-object/iterator',
-	'matreshka_dir/core/var/sym-iterator'
-], function(MK, dynamic, symIterator, iterator) {
+	'matreshka_dir/core/var/sym-iterator',
+    'matreshka_dir/matreshka-array/processrendering'
+], function(MK, dynamic, symIterator, iterator, processRendering) {
 	"use strict";
 	if (!MK) {
 		throw new Error('Matreshka is missing');
@@ -56,7 +57,15 @@ define([
 
 			hasOwnProperty: function(key) {
 				return this._initMK()[sym].keys.hasOwnProperty(key);
-			}
+			},
+
+			rerender: function(evt) {
+                //var index = this.indexOf(obj);
+                //var native_obj = obj.toJSON();
+                //this.pull(index);
+                //this.splice(index, 0, native_obj);
+				console.log(222, this);
+			},
 		};
 
 	MK.extend(prototype, dynamic);

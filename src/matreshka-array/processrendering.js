@@ -152,21 +152,30 @@ define([
 
 				break;
 			case 'rerender':
-				if (evt.forceRerender) {
-					for (i = 0; i < l; i++) {
-						item = _this[i];
-						node = item && item[sym] && item[sym].arraysNodes && item[sym].arraysNodes[id];
-						if (node) {
-							container.removeChild(node);
-						}
-					}
-				}
+                if(_this instanceof MK.Object){
+                    var index = this.indexOf(obj);
+                    var native_obj = obj.toJSON();
+                    this.pull(index);
+                    this.splice(index, 0, native_obj);
+                    console.log(222222222);
+                }
+                else {
+                    if (evt.forceRerender) {
+                        for (i = 0; i < l; i++) {
+                            item = _this[i];
+                            node = item && item[sym] && item[sym].arraysNodes && item[sym].arraysNodes[id];
+                            if (node) {
+                                container.removeChild(node);
+                            }
+                        }
+                    }
 
-				for (i = 0; i < l; i++) {
-					if (node = renderOne(_this, _this[i], evt)) {
-						container.appendChild(node);
-					}
-				}
+                    for (i = 0; i < l; i++) {
+                        if (node = renderOne(_this, _this[i], evt)) {
+                            container.appendChild(node);
+                        }
+                    }
+                }
 
 				break;
 			case 'recreate':
